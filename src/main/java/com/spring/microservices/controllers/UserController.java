@@ -59,6 +59,7 @@ public class UserController {
 	@PostMapping("/users")
 	public ResponseEntity<Object> saveUser(@Valid @RequestBody UserVO user) {
 		UserVO userVO = userBS.saveUser(user);
+		//Using ResponseEntity to give proper response.
 		URI loc = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userVO.getId()).toUri();
 		return ResponseEntity.created(loc).build();
 	}
