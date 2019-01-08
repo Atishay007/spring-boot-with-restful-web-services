@@ -1,8 +1,11 @@
 package com.spring.microservices.vo;
 
+import javax.validation.constraints.Size;
+
 public class UserVO {
 
 	private Integer id;
+	@Size(min = 2, message = "First Name should be at least 2 character")
 	private String firstName;
 	private String lastName;
 
