@@ -1,4 +1,4 @@
-package com.spring.microservices.controllers;
+package com.spring.microservices.exceptions;
 
 public class UserNotFoundException extends Exception{
 

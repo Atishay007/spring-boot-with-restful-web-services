@@ -6,16 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.microservices.vo.CustomConfigurationVO;
+import com.spring.microservices.configuration.CustomConfigurationVO;
 import com.spring.microservices.vo.UserVO;
 
-@Service  //Required by spring to understand what class to register.
+@Service // Required by spring to understand what class to register.
 public class UsersBS implements UsersBSI {
 
 	@Autowired
-	//This will automatically be bind with values present in property file.
+	// This will automatically be bind with values present in property file.
 	private CustomConfigurationVO customConfVO;
-	
+
 	private static List<UserVO> lstUsers = new ArrayList<>();
 	private static int usersCount = 5;
 
@@ -29,8 +29,8 @@ public class UsersBS implements UsersBSI {
 
 	@Override
 	public UserVO getUser(int id) {
-		UserVO userVO= lstUsers.stream().filter(u -> u.getId() == id).findFirst().orElse(null);
-		
+		UserVO userVO = lstUsers.stream().filter(u -> u.getId() == id).findFirst().orElse(null);
+
 		System.out.println(
 				"####First name present in custom Configuration Property file is :" + customConfVO.getFirstName());
 		return userVO;

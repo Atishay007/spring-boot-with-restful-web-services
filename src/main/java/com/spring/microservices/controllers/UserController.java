@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
+import com.spring.microservices.exceptions.UserNotFoundException;
 import com.spring.microservices.services.UsersBSI;
 import com.spring.microservices.vo.UserVO;
 

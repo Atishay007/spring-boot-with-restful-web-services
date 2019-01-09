@@ -16,7 +16,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import com.spring.microservices.vo.CustomConfigurationVO;
+import com.spring.microservices.configuration.CustomConfigurationVO;
 
 @SpringBootApplication
 public class SpringMicroservicesApplication {

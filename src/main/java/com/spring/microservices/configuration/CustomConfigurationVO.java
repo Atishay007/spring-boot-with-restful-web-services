@@ -1,4 +1,4 @@
-package com.spring.microservices.vo;
+package com.spring.microservices.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
