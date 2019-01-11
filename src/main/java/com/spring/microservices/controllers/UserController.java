@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
@@ -42,8 +43,10 @@ public class UserController {
 	}
 
 	// The Path variable name should be common in parameter and in request also.
+	//If you want to change name of path variable then we can do this using
+	//@PathVariable(name or required or value(default))
 	@GetMapping("/users/{userId}")
-	public Resource<UserVO> getUserById(@PathVariable int userId) throws UserNotFoundException {
+	public Resource<UserVO> getUserById(@PathVariable() int userId) throws UserNotFoundException {
 		UserVO userVO = userBS.getUser(userId);
 		if (userVO == null) {
 			throw new UserNotFoundException("User Not Found with " + (new Integer(userId).toString()));
@@ -57,6 +60,12 @@ public class UserController {
 		return resource;
 	}
 
+	/**
+	 * Accepting Post Request along with Body.
+	 * @Valid is necessary to make validations on UserVO.
+	 * @param user
+	 * @return
+	 */
 	@PostMapping("/users")
 	public ResponseEntity<Object> saveUser(@Valid @RequestBody UserVO user) {
 		UserVO userVO = userBS.saveUser(user);
@@ -80,5 +89,58 @@ public class UserController {
 	public String helloWorld() {
 		//LocaleContextHolder this will automatically take the header which we are sending from Request.
 		return messageSource.getMessage("good.morning.message", null, LocaleContextHolder.getLocale());
+	}
+	
+	/**
+	 * Accepting UserID as Query Parameter.
+	 * http://localhost:8081/accepting-params/userID?userID=2
+	 * 
+	 * In Postman we will set key and value in Params section.
+	 * @param userID
+	 * @return
+	 */
+	@GetMapping("/accepting-query-params")
+	public String getAnswerForAcceptingParams(@RequestParam(name = "userID") int userID) {
+		System.out.println("UserID got through Query Parameter: " + userID);
+		return null;
+	}
+	
+	
+	/**
+	 * First way of Versioning through "params"
+	 * Versioning through "params" Accepting UserID as Query Parameter.
+	 * 
+	 * V#: params = "version=1"
+	 * 
+	 * @param userID
+	 * @return
+	 */
+	@GetMapping(value = "/accepting-params", params = "version=1")
+	public String paramV1() {
+		return "Accepted Version 1";
+	}
+	
+	
+	/**
+	 * Second way of Versioning through headers
+	 * 
+	 * @param userID
+	 * @return
+	 */
+	@GetMapping(value = "/accepting-params/header", headers = "X-API-Version=1")
+	public String headerV1() {
+		return "Accepted Header V1";
+	}
+	
+	
+	/**
+	 * Third way of Versioning through prduces
+	 * 
+	 * @param userID
+	 * @return
+	 */
+	@GetMapping(value = "/produces", produces = "application/vnd.com.company.tass+json;level=1")
+	public String producesV1() {
+		return "Produces Versioning V1";
 	}
 }
