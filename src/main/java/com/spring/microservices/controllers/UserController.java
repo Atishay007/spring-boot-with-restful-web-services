@@ -134,8 +134,10 @@ public class UserController {
 	
 	
 	/**
-	 * Third way of Versioning through prduces
+	 * Third way of Versioning through produces
 	 * 
+	 * The header type can be "Accept" or Content-type both
+	 * and this will be a value present in produces.
 	 * @param userID
 	 * @return
 	 */
