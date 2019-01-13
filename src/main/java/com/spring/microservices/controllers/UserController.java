@@ -32,7 +32,7 @@ public class UserController {
 	@Autowired
 	private UsersBSI userBS;
 	
-	//The name of the varaible should match with the method name
+	//The name of the variable should match with the method name
 	//which we have defined as a @Bean.
 	@Autowired
 	private MessageSource messageSource;
@@ -46,7 +46,7 @@ public class UserController {
 	//If you want to change name of path variable then we can do this using
 	//@PathVariable(name or required or value(default))
 	@GetMapping("/users/{userId}")
-	public Resource<UserVO> getUserById(@PathVariable() int userId) throws UserNotFoundException {
+	public Resource<UserVO> getUserById(@PathVariable int userId) throws UserNotFoundException {
 		UserVO userVO = userBS.getUser(userId);
 		if (userVO == null) {
 			throw new UserNotFoundException("User Not Found with " + (new Integer(userId).toString()));
@@ -109,11 +109,14 @@ public class UserController {
 	/**
 	 * First way of Versioning through "params"
 	 * Versioning through "params" Accepting UserID as Query Parameter.
-	 * 
-	 * V#: params = "version=1"
+	 *
+	 * Example:URI: http://localhost:8081/accepting-params
+	 * In Params tab:
+	 * key=version
+	 * value=1
 	 * 
 	 * @param userID
-	 * @return
+	 * @return String
 	 */
 	@GetMapping(value = "/accepting-params", params = "version=1")
 	public String paramV1() {
@@ -122,12 +125,16 @@ public class UserController {
 	
 	
 	/**
-	 * Second way of Versioning through headers
+	 * Second way of Versioning through headers.
+	 * 
+	 * Example: http://localhost:8081/accepting-header
+	 * In header section Key=X-API-Version
+	 * Value=1
 	 * 
 	 * @param userID
 	 * @return
 	 */
-	@GetMapping(value = "/accepting-params/header", headers = "X-API-Version=1")
+	@GetMapping(value = "/accepting-header", headers = "X-API-Version=1")
 	public String headerV1() {
 		return "Accepted Header V1";
 	}
