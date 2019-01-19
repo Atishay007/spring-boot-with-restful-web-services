@@ -57,19 +57,32 @@ public class UserController {
 		//We have imported all static methods of ControllerLinkBuilder and linkTo is also part of it.
 		ControllerLinkBuilder linkTo=linkTo(methodOn(this.getClass()).getAllUsers());
 		resource.add(linkTo.withRel("all-users"));
+		
+		/*//Output for the above HATEOAS.
+		{
+		    "id": 1,
+		    "firstName": "Atishay",
+		    "lastName": "Jain",
+		    "_links": {
+		        "all-users": {
+		            "href": "http://localhost:8081/users"
+		        }
+		    }
+		}*/
+		
 		return resource;
 	}
 
 	/**
 	 * Accepting Post Request along with Body.
 	 * @Valid is necessary to make validations on UserVO.
-	 * @param user
-	 * @return
+	 * @param UserVO
+	 * @return ResponseEntity<Object>
 	 */
 	@PostMapping("/users")
 	public ResponseEntity<Object> saveUser(@Valid @RequestBody UserVO user) {
 		UserVO userVO = userBS.saveUser(user);
-		//Using ResponseEntity to give proper response.
+		// Using ResponseEntity to give proper response.
 		URI loc = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userVO.getId()).toUri();
 		return ResponseEntity.created(loc).build();
 	}
@@ -82,8 +95,7 @@ public class UserController {
 	 * @RequestHeader(name = "Accept-Language", required = false) Locale locale
 	 * in method parameter, we can directly use the below way.
 	 * 
-	 * @param locale
-	 * @return
+	 * @return String
 	 */
 	@GetMapping("/hello-world-internalizalized")
 	public String helloWorld() {
@@ -95,16 +107,24 @@ public class UserController {
 	 * Accepting UserID as Query Parameter.
 	 * http://localhost:8081/accepting-params/userID?userID=2
 	 * 
+	 * OR
+	 * 
+	 * http://localhost:8081/accepting-query-params?userID=2&name=Atishay
+	 * 
+	 * By default @RequestParam is mandatory.
+	 * To make it not mandatory use "required" =false.
+	 * 
 	 * In Postman we will set key and value in Params section.
 	 * @param userID
-	 * @return
+	 * @return String
 	 */
 	@GetMapping("/accepting-query-params")
-	public String getAnswerForAcceptingParams(@RequestParam(name = "userID") int userID) {
+	public String getAnswerForAcceptingParams(@RequestParam(name = "userID", required = false) Integer userID,
+			@RequestParam(name = "name", required = false) String name) {
 		System.out.println("UserID got through Query Parameter: " + userID);
-		return null;
+		System.out.println("Name is: " + name);
+		return userID + " " + name;
 	}
-	
 	
 	/**
 	 * First way of Versioning through "params"

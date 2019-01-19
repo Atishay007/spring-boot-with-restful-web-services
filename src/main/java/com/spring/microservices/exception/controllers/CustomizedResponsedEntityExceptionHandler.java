@@ -21,7 +21,9 @@ import com.spring.microservices.exceptions.UserNotFoundException;
  *
  */
 
-@ControllerAdvice // so that it will eligible for all controllers.
+@ControllerAdvice // Specialization of @Component for classes that declare @ExceptionHandler,
+					// @InitBinder, or @ModelAttribute methods to be shared across multiple
+					// @Controller classes.
 @RestController // becoz it returns response
 public class CustomizedResponsedEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -31,20 +33,21 @@ public class CustomizedResponsedEntityExceptionHandler extends ResponseEntityExc
 				request.getDescription(false));
 		return new ResponseEntity<Object>(exResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-	
-	@ExceptionHandler(UserNotFoundException.class) // this is the exception thrown from one of the methods present in controller.
+
+	@ExceptionHandler(UserNotFoundException.class) // this is the exception thrown from one of the methods present in
+													// controller.
 	public final ResponseEntity<Object> userNotFoundException(Exception ex, WebRequest request) throws Exception {
 		ExceptionResponse exResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
 		return new ResponseEntity<Object>(exResponse, HttpStatus.NOT_FOUND);
 	}
-	
+
 	/**
-	 * This method is called when RequestBody validations failed
-	 * that are present on UserVO.
+	 * This method is called when RequestBody validations failed that are present on
+	 * UserVO.
 	 * 
-	 * Check this: com.spring.microservices.controllers.UserController.saveUser(UserVO)
+	 * Check this:
+	 * com.spring.microservices.controllers.UserController.saveUser(UserVO)
 	 */
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
