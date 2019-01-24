@@ -2,21 +2,12 @@ package com.spring.microservices;
 
 import java.util.Locale;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
-import com.spring.microservices.configuration.CustomConfigurationVO;
 
 @SpringBootApplication
 public class SpringMicroservicesApplication {
@@ -44,7 +35,7 @@ public class SpringMicroservicesApplication {
 		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
 		localeResolver.setDefaultLocale(Locale.US);
 		
-		//use of Serverport
+		//use of Server Port
 		System.out.println("SpringBoot started on server port: "+serverPort);
 		return localeResolver;
 	}
