@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.mapstruct.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -16,10 +17,13 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -38,7 +42,10 @@ public class UserController {
 	@Autowired
 	private MessageSource messageSource;
 
-	@GetMapping("/users")
+	//This is old way.
+	//@RequestMapping(path="/users",produces="application/json", method=RequestMethod.GET)
+	//This is new way.
+	@GetMapping(path="/users", produces="application/json")
 	public List<UserVO> getAllUsers() {
 		return userBS.getUsers();
 	}
@@ -182,8 +189,25 @@ public class UserController {
 	 * @param userName
 	 */
 	@PostMapping("/lists")
-	public void saveMapping(@RequestBody Map<String, String> map, @RequestHeader("Authorization") String userName) {
+	public void displayHeaderAndRequestBody(@RequestBody Map<String, String> map, @RequestHeader("Authorization") String userName) {
 		System.out.println(map);
 		System.out.println("Authorization Header Requested Value: "+userName);
+	}
+
+	/**
+	 * Use of Matrix Variable. We have to enable them manually, for this reason we
+	 * have create WebConfig.java class becoz by default they are disable.
+	 * Request:
+	 * http://localhost:9001/param-annotation/atishay;user=jain
+	 * 
+	 * To understand more go through:
+	 * https://www.baeldung.com/spring-mvc-matrix-variables
+	 * 
+	 * @param username
+	 * @param path
+	 */
+	@GetMapping("/param-annotation/{username}")
+	public void saveMapping(@PathVariable String username, @MatrixVariable(name = "user") String path) {
+		System.out.println(username);
 	}
 }
