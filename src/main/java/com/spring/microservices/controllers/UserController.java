@@ -1,8 +1,11 @@
 package com.spring.microservices.controllers;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.net.URI;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -20,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 import com.spring.microservices.exceptions.UserNotFoundException;
 import com.spring.microservices.services.UsersBSI;
@@ -32,8 +34,7 @@ public class UserController {
 	@Autowired
 	private UsersBSI userBS;
 	
-	//The name of the variable should match with the method name
-	//which we have defined as a @Bean.
+	//For Internalization.
 	@Autowired
 	private MessageSource messageSource;
 
@@ -111,7 +112,7 @@ public class UserController {
 	 * 
 	 * http://localhost:8081/accepting-query-params?userID=2&name=Atishay
 	 * 
-	 * By default @RequestParam is mandatory.
+	 * By default @RequestParam "required = true " which means it is mandatory.
 	 * To make it not mandatory use "required" =false.
 	 * 
 	 * In Postman we will set key and value in Params section.
@@ -138,7 +139,7 @@ public class UserController {
 	 * @param userID
 	 * @return String
 	 */
-	@GetMapping(value = "/accepting-params", params = "version=1")
+	@GetMapping(value = "/accepting-params-versioning", params = "version=1")
 	public String paramV1() {
 		return "Accepted Version 1";
 	}
@@ -154,7 +155,7 @@ public class UserController {
 	 * @param userID
 	 * @return
 	 */
-	@GetMapping(value = "/accepting-header", headers = "X-API-Version=1")
+	@GetMapping(value = "/accepting-header-versioning", headers = "X-API-Version=1")
 	public String headerV1() {
 		return "Accepted Header V1";
 	}
@@ -171,5 +172,18 @@ public class UserController {
 	@GetMapping(value = "/produces", produces = "application/vnd.com.company.tass+json;level=1")
 	public String producesV1() {
 		return "Produces Versioning V1";
+	}
+
+	/**
+	 * This is just an example of hose to use @RequestHeaders
+	 * and how to take input in format of key-value using Map instead of
+	 * customVo like UserVO.
+	 * @param map
+	 * @param userName
+	 */
+	@PostMapping("/lists")
+	public void saveMapping(@RequestBody Map<String, String> map, @RequestHeader("Authorization") String userName) {
+		System.out.println(map);
+		System.out.println("Authorization Header Requested Value: "+userName);
 	}
 }

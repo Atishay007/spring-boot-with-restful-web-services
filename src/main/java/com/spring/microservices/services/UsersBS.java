@@ -14,7 +14,7 @@ public class UsersBS implements UsersBSI {
 
 	@Autowired
 	// This will automatically be bind with values present in property file.
-	private CustomConfigurationVO customConfVO;
+	//private CustomConfigurationVO customConfVO;
 
 	private static List<UserVO> lstUsers = new ArrayList<>();
 	private static int usersCount = 5;
@@ -31,8 +31,8 @@ public class UsersBS implements UsersBSI {
 	public UserVO getUser(int id) {
 		UserVO userVO = lstUsers.stream().filter(u -> u.getId() == id).findFirst().orElse(null);
 
-		System.out.println(
-				"####First name present in custom Configuration Property file is :" + customConfVO.getFirstName());
+		/*System.out.println(
+				"####First name present in custom Configuration Property file is :" + customConfVO.getFirstName());*/
 		return userVO;
 	}
 
