@@ -6,18 +6,18 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.microservices.vo.FilteringVO;
+import com.spring.microservices.vo.StaticFilteringVO;
 
 import io.swagger.annotations.ApiResponse;
 
 @RestController
-public class FilteringController {
+public class StaticFilteringController {
 
 	@ApiResponse(message = "Atishay", code = 200)
 	@GetMapping("/filteringVO")
-	public List<FilteringVO> getFilteringVO() {
-		return Arrays.asList(new FilteringVO("Atishay", "Jain"), new FilteringVO("Barbie", "Jain"),
-				new FilteringVO("Gaurav", "Soni"), new FilteringVO("Ajinkya", "Vaze"));
+	public List<StaticFilteringVO> getFilteringVO() {
+		return Arrays.asList(new StaticFilteringVO("Atishay", "Jain"), new StaticFilteringVO("Barbie", "Jain"),
+				new StaticFilteringVO("Gaurav", "Soni"), new StaticFilteringVO("Ajinkya", "Vaze"));
 
 	}
 }

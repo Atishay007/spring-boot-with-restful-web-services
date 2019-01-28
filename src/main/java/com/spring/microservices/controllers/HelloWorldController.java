@@ -9,7 +9,6 @@ import com.spring.microservices.configuration.CustomConfigurationVO;
 
 @RestController
 public class HelloWorldController {
-
 	
 	@Autowired
 	private CustomConfigurationVO config;

@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "This webservice filter the records send in response", value = "FilteringVO")
 //This is first way to hide or to filter properties.
 @JsonIgnoreProperties(value = { "lastName" })
-public class FilteringVO {
+public class StaticFilteringVO {
 
 	// This is second way, we can hide properties in this way.
 	// @JsonIgnore
@@ -18,11 +18,11 @@ public class FilteringVO {
 	@ApiModelProperty(notes="lastName should have 2 characters.")
 	private String lastName;
 
-	public FilteringVO() {
+	public StaticFilteringVO() {
 		super();
 	}
 
-	public FilteringVO(String firstName, String lastName) {
+	public StaticFilteringVO(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
