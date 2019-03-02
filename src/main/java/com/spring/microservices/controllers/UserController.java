@@ -138,7 +138,7 @@ public class UserController {
 	 * First way of Versioning through "params"
 	 * Versioning through "params" Accepting UserID as Query Parameter.
 	 *
-	 * Example:URI: http://localhost:8081/accepting-params
+	 * Example:URI: http://localhost:8081/accepting-params-versioning
 	 * In Params tab:
 	 * key=version
 	 * value=1
@@ -182,7 +182,7 @@ public class UserController {
 	}
 
 	/**
-	 * This is just an example of hose to use @RequestHeaders
+	 * This is just an example of how to use @RequestHeader
 	 * and how to take input in format of key-value using Map instead of
 	 * customVo like UserVO.
 	 * @param map
