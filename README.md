@@ -20,6 +20,10 @@ com.fasterxml.jackson.dataformat dependency.
 13. This app is using Spring Rest WebServices.
 14. Using DevTools to reload the changes without manually restarting the application.
 
+# Important
+1. Added: How to do external configuration for yml/yaml file (not application.yml) and injecting values using Spring Environment and @Value annotation.
+2. Removed: External configuration for other properties file as it was very easy and there example are available on internet.
+
 # Execution:
 1. To run the above app, use below command from cmd prompt.
 mvn run spring-boot:run
