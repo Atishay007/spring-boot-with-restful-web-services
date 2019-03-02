@@ -5,16 +5,15 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
-import com.spring.microservices.configuration.CustomConfigurationVO;
 
 //@SpringBootApplication(exclude = { JmsAutoConfiguration.class, JmxAutoConfiguration.class })
 @SpringBootApplication
 //@EnableConfigurationProperties(CustomConfigurationVO.class)
+
 public class SpringMicroservicesApplication {
 
 	@Value("${server.port}")

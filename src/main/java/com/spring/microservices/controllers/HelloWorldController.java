@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.microservices.configuration.CustomConfigurationVO;
+import com.spring.microservices.exception.controllers.Checker;
 
 @RestController
 public class HelloWorldController {
@@ -17,6 +18,15 @@ public class HelloWorldController {
 	@GetMapping("")
 	public String getHelloWorld() {
 		//System.out.println("First name: "+config.getFirstName());
+		
+		//This is a custom class added in Library folder.
+		//This is just to test how we can add custom class.
+		
+		//For more info:
+		//https://www.wikihow.com/Add-JARs-to-Project-Build-Paths-in-Eclipse-%28Java%29
+		Checker checker = new Checker("Atishay", "Jain");
+		System.out.println(checker.getFirstName());
+		
 		return "Application Started";
 	}
 
