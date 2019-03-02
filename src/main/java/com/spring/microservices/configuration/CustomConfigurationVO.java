@@ -1,36 +1,46 @@
 package com.spring.microservices.configuration;
 
-import javax.validation.constraints.NotNull;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
 
+/**
+ * This class is using custom yml/yaml file.
+ * Using properties file in external configuration is very easy.
+ * 
+ * But this custom yaml file functionality has taken more than 4 hrs.
+ * We have achieved 2 things.
+ * 
+ * 1. External configuration for custom yml/yaml file not application.yaml/yml.
+ * 2. We can inject those value using @Value annotation.
+ * 
+ * @author Champ
+ *
+ */
 @Configuration
 //@PropertySource can't be used when there is yaml file.
-@PropertySource("custom_configuration.properties")
-@ConfigurationProperties(prefix = "user")
+@ConfigurationProperties(prefix = "fullname")
 public class CustomConfigurationVO {
 
-	@NotNull
-	private String firstName;
-	private String lastName;
+	private String firstname;
+	private String lastname;
 
-	public String getFirstName() {
-		return firstName;
+	public CustomConfigurationVO() {
+		super();
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public String getLastname() {
+		return lastname;
 	}
 
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 }

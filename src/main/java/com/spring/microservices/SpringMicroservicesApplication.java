@@ -1,49 +1,110 @@
 package com.spring.microservices;
 
+import java.io.IOException;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.env.YamlPropertySourceLoader;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
-
+//How to exclude classes
 //@SpringBootApplication(exclude = { JmsAutoConfiguration.class, JmxAutoConfiguration.class })
 @SpringBootApplication
-//@EnableConfigurationProperties(CustomConfigurationVO.class)
+@EnableConfigurationProperties
 
-public class SpringMicroservicesApplication {
+public class SpringMicroservicesApplication implements CommandLineRunner {
 
+	@Autowired
+	private Environment env;
+
+	// This property is present in
+	// application.properties
 	@Value("${server.port}")
 	private int serverPort;
 
-	public static void main(String[] args) {
+	// This is present in custom2.yml
+	@Value("${fullname.firstname}")
+	private String firstName;
+
+	public static void main(String[] args) throws IOException {
+		// The Spring will starts its magic of autowiring and other methods during the
+		// below method
+		// execution.
 		SpringApplication.run(SpringMicroservicesApplication.class, args);
 	}
 
+	// ConfigurableApplicationContext will be autowired by the Spring.
+	@Bean
+	public static PropertySource<?> makeSome(ConfigurableApplicationContext apContext) throws IOException {
+		YamlPropertySourceLoader loader = new YamlPropertySourceLoader();
+		PropertySource<?> applicationYamlPropertySource = loader
+				.load("custom2.yml", new ClassPathResource("custom2.yml")).get(0);
+		// System.out.println("The property name is: " +
+		// applicationYamlPropertySource.getProperty("user1.ati"));
+		apContext.getEnvironment().getPropertySources().addLast(applicationYamlPropertySource);
+		return applicationYamlPropertySource;
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println("FirstName using environment :" + env.getProperty("fullname.firstname"));
+		System.out.println("FirstName using @Value tag: " + firstName);
+		System.out.println("Server Port:" + serverPort);
+	}
+
 	/**
-	 * LocaleResolver is from : import
-	 * org.springframework.web.servlet.LocaleResolver; import
-	 * org.springframework.web.servlet.i18n.SessionLocaleResolver;
+	 * This method has no use as now we have manually configured
+	 * PropertySourcesPlaceholderConfigurer.
 	 * 
-	 * This is used fro i18n (internalization).
+	 * If we use this method then we can't use {@value} tag, becoz we will get error
+	 * like Injection of autowired dependencies failed; nested exception is
+	 * java.lang.IllegalArgumentException: Could not resolve placeholder
+	 * 'fullname.firstname' in value "${fullname.firstname}"
+	 * 
+	 * So we have manually configured it.
+	 * 
 	 * @return
 	 */
-	@Bean
-	public LocaleResolver localeResolver() {
-		// SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-		//
-		// Now I have to use AcceptHeaderLocaleResolver, as we are taking value of
-		// header Accept-Language
-		// in spring automatically.
-		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-		localeResolver.setDefaultLocale(Locale.US);
+	/*
+	 * @Bean public PropertySource<?> yamlPropertySourceLoader() throws IOException
+	 * { YamlPropertySourceLoader loader = new YamlPropertySourceLoader();
+	 * PropertySource<?> applicationYamlPropertySource = loader .load("custom2.yml",
+	 * new ClassPathResource("custom2.yml")).get(0); //
+	 * System.out.println("The property name is: " + //
+	 * applicationYamlPropertySource.getProperty("user1.firstName")); return
+	 * applicationYamlPropertySource; }
+	 */
 
-		// use of Server Port
-		System.out.println("SpringBoot started on server port: " + serverPort);
-		return localeResolver;
+	/**
+	 * This will give us freedom to use external configuration of yml/yaml file we
+	 * are not talking about application.yml, we are talking about custom.yml file
+	 * and we have to inject that value using @Value tag.
+	 * 
+	 * There should be return type of every @Bean methods, we can't make those
+	 * methods as void.
+	 * 
+	 * @return PropertySourcesPlaceholderConfigurer
+	 */
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer properties() {
+		PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+		YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
+		yaml.setResources(new ClassPathResource("custom2.yml"));
+		propertySourcesPlaceholderConfigurer.setProperties(yaml.getObject());
+		return propertySourcesPlaceholderConfigurer;
 	}
 
 	/**
@@ -65,4 +126,28 @@ public class SpringMicroservicesApplication {
 	 * ResourceBundleMessageSource msgSource = new ResourceBundleMessageSource();
 	 * msgSource.setBasename("messages"); return msgSource; }
 	 */
+
+	/**
+	 * LocaleResolver is from : import
+	 * org.springframework.web.servlet.LocaleResolver; import
+	 * org.springframework.web.servlet.i18n.SessionLocaleResolver;
+	 * 
+	 * This is used for i18n (internalization).
+	 * 
+	 * @return
+	 */
+	@Bean
+	public LocaleResolver localeResolver() {
+		// SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+		//
+		// Now I have to use AcceptHeaderLocaleResolver, as we are taking value of
+		// header Accept-Language
+		// in spring automatically.
+		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+		localeResolver.setDefaultLocale(Locale.US);
+
+		// use of Server Port
+		System.out.println("SpringBoot started on server port: " + serverPort);
+		return localeResolver;
+	}
 }
