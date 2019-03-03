@@ -19,6 +19,9 @@ public class HelloWorldController {
 	@Autowired
 	private CustomConfigurationVO config;
 	
+	@Value("${fullname.firstname}")
+	private String firstName;
+	
 	// For application health status.
 	@GetMapping("")
 	public String getHelloWorld() {
@@ -33,6 +36,7 @@ public class HelloWorldController {
 		//System.out.println(checker.getFirstName());
 		
 		System.out.println("Spring ENV: "+env.getProperty("fullname.firstname"));
+		System.out.println("Using @Value tag: "+ firstName);
 		System.out.println("Using External Configuration :"+config.getFirstname());
 		return "Application Started";
 	}

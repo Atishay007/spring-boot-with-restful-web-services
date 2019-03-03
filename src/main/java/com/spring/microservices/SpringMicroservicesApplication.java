@@ -41,21 +41,8 @@ public class SpringMicroservicesApplication implements CommandLineRunner {
 
 	public static void main(String[] args) throws IOException {
 		// The Spring will starts its magic of autowiring and other methods during the
-		// below method
-		// execution.
+		// below method execution.
 		SpringApplication.run(SpringMicroservicesApplication.class, args);
-	}
-
-	// ConfigurableApplicationContext will be autowired by the Spring.
-	@Bean
-	public static PropertySource<?> makeSome(ConfigurableApplicationContext apContext) throws IOException {
-		YamlPropertySourceLoader loader = new YamlPropertySourceLoader();
-		PropertySource<?> applicationYamlPropertySource = loader
-				.load("custom2.yml", new ClassPathResource("custom2.yml")).get(0);
-		// System.out.println("The property name is: " +
-		// applicationYamlPropertySource.getProperty("user1.ati"));
-		apContext.getEnvironment().getPropertySources().addLast(applicationYamlPropertySource);
-		return applicationYamlPropertySource;
 	}
 
 	@Override
@@ -66,8 +53,8 @@ public class SpringMicroservicesApplication implements CommandLineRunner {
 	}
 
 	/**
-	 * This method has no use as now we have manually configured
-	 * PropertySourcesPlaceholderConfigurer.
+	 * This method is used when we want to use yml properties in Spring Environment
+	 * using environment.
 	 * 
 	 * If we use this method then we can't use {@value} tag, becoz we will get error
 	 * like Injection of autowired dependencies failed; nested exception is
@@ -79,17 +66,22 @@ public class SpringMicroservicesApplication implements CommandLineRunner {
 	 * This is used when we want: Exposing YAML as Properties in the Spring
 	 * Environment
 	 * 
-	 * @return
+	 * ConfigurableApplicationContext will be autowired by the Spring, if there are
+	 * 2 parameters then we have to use @Autowired.
+	 * 
+	 * @return PropertySource<?>
 	 */
-	/*
-	 * @Bean public PropertySource<?> yamlPropertySourceLoader() throws IOException
-	 * { YamlPropertySourceLoader loader = new YamlPropertySourceLoader();
-	 * PropertySource<?> applicationYamlPropertySource = loader .load("custom2.yml",
-	 * new ClassPathResource("custom2.yml")).get(0); //
-	 * System.out.println("The property name is: " + //
-	 * applicationYamlPropertySource.getProperty("user1.firstName")); return
-	 * applicationYamlPropertySource; }
-	 */
+
+	@Bean
+	public static PropertySource<?> loadYamlPropertiesInSpringEnv(ConfigurableApplicationContext apContext)
+			throws IOException {
+		YamlPropertySourceLoader loader = new YamlPropertySourceLoader();
+		PropertySource<?> applicationYamlPropertySource = loader
+				.load("custom2.yml", new ClassPathResource("custom2.yml")).get(0);
+		// It is necessary to add this in application context.
+		apContext.getEnvironment().getPropertySources().addLast(applicationYamlPropertySource);
+		return applicationYamlPropertySource;
+	}
 
 	/**
 	 * This will give us freedom to use external configuration of yml/yaml file we
@@ -97,18 +89,24 @@ public class SpringMicroservicesApplication implements CommandLineRunner {
 	 * and we have to inject that value using @Value tag.
 	 * 
 	 * There should be return type of every @Bean methods, we can't make those
-	 * methods as void.
+	 * methods as void., otherwise runtime exception will be there.
+	 * 
+	 * If we don't use this method then we can't use {@value} tag, becoz we will get
+	 * error like Injection of autowired dependencies failed; nested exception is
+	 * java.lang.IllegalArgumentException: Could not resolve placeholder
+	 * 'fullname.firstname' in value "${fullname.firstname}"
 	 * 
 	 * @return PropertySourcesPlaceholderConfigurer
 	 * 
-	 * Use of Below Method::
-	 *         Spring Framework provides two convenient classes that can be used to
-	 *         load YAML documents. The YamlPropertiesFactoryBean loads YAML as
-	 *         Properties and the YamlMapFactoryBean loads YAML as a Map.
+	 *         Use of Below Method:: Spring Framework provides two convenient
+	 *         classes that can be used to load YAML documents. The
+	 *         YamlPropertiesFactoryBean loads YAML as Properties and the
+	 *         YamlMapFactoryBean loads YAML as a Map.
 	 */
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer properties() {
 		PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+		// This is the main part which is used to load yaml files.
 		YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
 		yaml.setResources(new ClassPathResource("custom2.yml"));
 		propertySourcesPlaceholderConfigurer.setProperties(yaml.getObject());
