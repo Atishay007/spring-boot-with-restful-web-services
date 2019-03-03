@@ -76,6 +76,9 @@ public class SpringMicroservicesApplication implements CommandLineRunner {
 	 * 
 	 * So we have manually configured it.
 	 * 
+	 * This is used when we want: Exposing YAML as Properties in the Spring
+	 * Environment
+	 * 
 	 * @return
 	 */
 	/*
@@ -97,6 +100,11 @@ public class SpringMicroservicesApplication implements CommandLineRunner {
 	 * methods as void.
 	 * 
 	 * @return PropertySourcesPlaceholderConfigurer
+	 * 
+	 * Use of Below Method::
+	 *         Spring Framework provides two convenient classes that can be used to
+	 *         load YAML documents. The YamlPropertiesFactoryBean loads YAML as
+	 *         Properties and the YamlMapFactoryBean loads YAML as a Map.
 	 */
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer properties() {
