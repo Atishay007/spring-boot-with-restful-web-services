@@ -46,6 +46,9 @@ public class CustomizedResponsedEntityExceptionHandler extends ResponseEntityExc
 	 * This method is called when RequestBody validations failed that are present on
 	 * UserVO.
 	 * 
+	 * Exception to be thrown when validation on an argument annotated with @Valid
+	 * fails.
+	 * 
 	 * Check this:
 	 * com.spring.microservices.controllers.UserController.saveUser(UserVO)
 	 */
