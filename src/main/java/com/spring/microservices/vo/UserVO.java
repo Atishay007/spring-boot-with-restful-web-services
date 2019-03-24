@@ -5,8 +5,6 @@ import javax.validation.constraints.Size;
 public class UserVO {
 
 	private Integer id;
-	//These annotations will work only when you have 
-	//@Valid annotation along with @RequestBody in PostMapping method.
 	@Size(min = 2, message = "First Name should be at least 2 character")
 	private String firstName;
 	private String lastName;

@@ -2,8 +2,6 @@ package com.spring.microservices.vo;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 
-//This annotation will execute custom filter
-//that we have created.
 @JsonFilter("BeanFilter")
 public class DynamicFilteringVO {
 

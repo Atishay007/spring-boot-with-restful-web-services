@@ -15,27 +15,22 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.spring.microservices.exceptions.UserNotFoundException;
 
 /**
- * This is the customized exception controller.
- * 
- * @author Champ
+ * Handling exceptions with proper response.
  *
  */
 
-@ControllerAdvice // Specialization of @Component for classes that declare @ExceptionHandler,
-					// @InitBinder, or @ModelAttribute methods to be shared across multiple
-					// @Controller classes.
-@RestController // becoz it returns response
+@RestController
+@ControllerAdvice
 public class CustomizedResponsedEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(Exception.class) // this is the exception thrown from one of the methods present in controller.
+	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) throws Exception {
 		ExceptionResponse exResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
 		return new ResponseEntity<Object>(exResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ExceptionHandler(UserNotFoundException.class) // this is the exception thrown from one of the methods present in
-													// controller.
+	@ExceptionHandler(UserNotFoundException.class)
 	public final ResponseEntity<Object> userNotFoundException(Exception ex, WebRequest request) throws Exception {
 		ExceptionResponse exResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
@@ -43,14 +38,7 @@ public class CustomizedResponsedEntityExceptionHandler extends ResponseEntityExc
 	}
 
 	/**
-	 * This method is called when RequestBody validations failed that are present on
-	 * UserVO.
-	 * 
-	 * Exception to be thrown when validation on an argument annotated with @Valid
-	 * fails.
-	 * 
-	 * Check this:
-	 * com.spring.microservices.controllers.UserController.saveUser(UserVO)
+	 * Handling invalid User Fields send in the request.
 	 */
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {

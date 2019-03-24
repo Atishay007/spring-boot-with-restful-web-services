@@ -14,10 +14,10 @@ import io.swagger.annotations.ApiResponse;
 public class StaticFilteringController {
 
 	@ApiResponse(message = "Atishay", code = 200)
-	@GetMapping("/filteringVO")
+	@GetMapping("/filtering")
 	public List<StaticFilteringVO> getFilteringVO() {
-		return Arrays.asList(new StaticFilteringVO("Atishay", "Jain"), new StaticFilteringVO("Barbie", "Jain"),
-				new StaticFilteringVO("Gaurav", "Soni"), new StaticFilteringVO("Ajinkya", "Vaze"));
+		return Arrays.asList(new StaticFilteringVO("Atishay", "Jain"), new StaticFilteringVO("Joshua", "Bloch"),
+				new StaticFilteringVO("Gaurav", "Saini"), new StaticFilteringVO("Ajinkya", "Vaze"));
 
 	}
 }

@@ -3,8 +3,8 @@ package com.spring.microservices.exception.controllers;
 import java.util.Date;
 
 public class ExceptionResponse {
-	private Date date;
 
+	private Date date;
 	private String message;
 	private String description;
 

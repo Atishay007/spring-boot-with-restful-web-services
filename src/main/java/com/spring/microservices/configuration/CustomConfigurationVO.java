@@ -4,20 +4,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * This class is using custom yml/yaml file.
- * Using properties file in external configuration is very easy.
+ * Reading properties from yaml file.
  * 
- * But this custom yaml file functionality has taken more than 4 hrs.
- * We have achieved 2 things.
- * 
- * 1. External configuration for custom yml/yaml file not application.yaml/yml.
- * 2. We can inject those value using @Value annotation.
- * 
- * @author Champ
- *
  */
 @Configuration
-//@PropertySource can't be used when there is yaml file.
 @ConfigurationProperties(prefix = "fullname")
 public class CustomConfigurationVO {
 

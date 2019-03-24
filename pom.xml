@@ -9,7 +9,7 @@
 		<version>2.1.1.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.spring.microservices</groupId>
 	<artifactId>spring-microservices</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-microservices</name>

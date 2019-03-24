@@ -6,9 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-//By using below annotation ,we are telling hibernate create table
-//with name Users, if we dont use it then by default table will be created 
-//with name as UserDTO.
 @Table(name = "Users")
 public class UserDTO {
 
