@@ -21,7 +21,6 @@ public class UsersBS implements UsersBSI {
 	private static int usersCount = 5;
 	private List<DynamicFilteringVO> dynamicVOS = new ArrayList<>();
 
-	// initialization block.
 	{
 		dynamicVOS.add(new DynamicFilteringVO("1", "Bawa", "Check"));
 		dynamicVOS.add(new DynamicFilteringVO("2", "Joshua", "Bloch"));
@@ -41,7 +40,7 @@ public class UsersBS implements UsersBSI {
 	 * Getting user from the usersLst based on Id.
 	 */
 	@Override
-	public UserVO getUserById(@NotNull int id) {
+	public UserVO getUserById(int id) {
 		return users.stream().filter(u -> u.getId() == id).findFirst().orElse(null);
 	}
 
