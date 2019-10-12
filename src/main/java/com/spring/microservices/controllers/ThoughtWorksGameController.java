@@ -1,36 +1,6 @@
 package com.spring.microservices.controllers;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import com.spring.microservices.vo.InputVO;
-import com.spring.microservices.vo.OutputVO;
-import com.spring.microservices.vo.Stage2InputVO;
-import com.spring.microservices.vo.Stage2OutputVO;
-import com.spring.microservices.vo.Stage3InputVO;
-import com.spring.microservices.vo.Stage3InputVO2;
-import com.spring.microservices.vo.Stage3OutputVO;
-import com.spring.microservices.vo.Stage4InputVO;
-import com.spring.microservices.vo.Stage4InputVO4;
-import com.spring.microservices.vo.Stage4OutputVO;
-import com.spring.microservices.vo.ToolsSortedOnUsage;
 
 /**
  * Ignore the below code, this is the solution of ThoughtWorks AI interview
@@ -41,7 +11,7 @@ import com.spring.microservices.vo.ToolsSortedOnUsage;
  */
 @RestController
 public class ThoughtWorksGameController {
-
+/*
 	@GetMapping("/start/game/stage1")
 	public void startGameStage1() throws URISyntaxException {
 
@@ -71,10 +41,10 @@ public class ThoughtWorksGameController {
 		ResponseEntity<OutputVO> postResult = restTemplate.postForEntity(uri, responseEntity, OutputVO.class);
 		System.out.println(postResult);
 
-		/*
+		
 		 * baseUrl="https://http-hunt.thoughtworks-labs.net/challenge"; uri = new
 		 * URI(baseUrl);
-		 */
+		 
 
 	}
 
@@ -169,10 +139,10 @@ public class ThoughtWorksGameController {
 		uri = new URI(baseUrl);
 		HttpEntity<Stage4OutputVO> responseEntity = new HttpEntity<>(output, headers);
 
-		/*
+		
 		 * ResponseEntity<Stage4OutputVO> postResult = restTemplate.postForEntity(uri,
 		 * responseEntity, Stage4OutputVO.class);
-		 */
+		 
 	}
 
 	private Stage4OutputVO toolsToCarry(Stage4InputVO input) {
@@ -295,5 +265,5 @@ public class ThoughtWorksGameController {
 		}
 		return strBuild.toString();
 
-	}
+	}*/
 }
