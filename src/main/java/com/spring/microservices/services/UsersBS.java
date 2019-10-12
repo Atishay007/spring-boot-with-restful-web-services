@@ -36,33 +36,21 @@ public class UsersBS implements UsersBSI {
 		users.add(new UserVO(5, "Rohini", "Sharma"));
 	}
 
-	/**
-	 * Getting user from the usersLst based on Id.
-	 */
 	@Override
 	public UserVO getUserById(int id) {
 		return users.stream().filter(u -> u.getId() == id).findFirst().orElse(null);
 	}
 
-	/**
-	 * Getting user by Name.
-	 */
 	@Override
 	public DynamicFilteringVO getUserByFirstName(@NotNull String firstName) {
 		return dynamicVOS.stream().filter(u -> u.getFirstName().equals(firstName)).findFirst().orElse(null);
 	}
 
-	/**
-	 * Getting Users.
-	 */
 	@Override
 	public List<UserVO> getUsers() {
 		return users;
 	}
 
-	/**
-	 * Saving User.
-	 */
 	@Override
 	public UserVO saveUser(UserVO user) {
 		if (user.getId() == null) {
@@ -83,14 +71,10 @@ public class UsersBS implements UsersBSI {
 		// creating filter.
 		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("id", fieldName);
 
-		// adding filter
-		// This BeanFilter should be used as @JsonFilter("BeanFilter") on VO, then only
-		// this will work.
 		FilterProvider filters = new SimpleFilterProvider().addFilter("BeanFilter", filter);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(vo);
 
-		// applying filter on matched VO.
 		mapping.setFilters(filters);
 
 		return mapping;

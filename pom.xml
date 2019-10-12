@@ -45,11 +45,11 @@
 		</dependency> -->
 
 		<!-- This dependency is for Spring Security -->
-<!-- 		<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
- -->
+ 
 		<!-- Dependency for HATEOAS -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

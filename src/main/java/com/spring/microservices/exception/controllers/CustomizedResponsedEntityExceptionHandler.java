@@ -16,7 +16,6 @@ import com.spring.microservices.exceptions.UserNotFoundException;
 
 /**
  * Handling exceptions with proper response.
- *
  */
 
 @RestController
