@@ -42,3 +42,5 @@ java -jar -Dserver.port=8083 spring-microservices-0.0.1-SNAPSHOT.jar
 User username: user and password: It will be displayed in Console.
 Use these username and password and set these into Authorization column by selecting Authorization as "Basic"
 
+3.Implemented Spring Security In-memory basic authentication, please see: BasicAuthenticationHandler.java
+If sending request from PostMan, use Basic-Auth under Authorization tab and then set the user and password as given in above file
