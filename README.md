@@ -19,6 +19,7 @@ com.fasterxml.jackson.dataformat dependency.
 12. It uses externalizable configuration by using "custom_configuration.properties". Currently supports ".properties file" but the same functinality can be done for yaml or yml(yet another markup language) files.
 13. This app is using Spring Rest WebServices.
 14. Using DevTools to reload the changes without manually restarting the application.
+15. Spring Security Basic In-Memory authentication.
 
 # Important
 1. Added: How to do external configuration for yml/yaml file (not application.yml) and injecting values using Spring Environment and @Value annotation.
