@@ -23,7 +23,8 @@ public class DynamicFilteringController {
 	 * @return MappingJacksonValue
 	 */
 	@GetMapping("/users/filter")
-	public MappingJacksonValue getUserByFirstName(@RequestParam(name="firstname", required=false)  String firstName) {
+	public MappingJacksonValue getUserByFirstName(
+			@RequestParam(name = "firstname", required = false) String firstName) {
 
 		// finding vo by firstName.
 		DynamicFilteringVO vo = usersBS.getUserByFirstName(firstName);
