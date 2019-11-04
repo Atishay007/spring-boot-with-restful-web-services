@@ -11,7 +11,7 @@ Make sure: jdbc:url in UI is referring to : jdbc:h2:mem:testdb
 5. It uses HATEOAS to create links of other URI.
 6. It uses Spring ResponseEntityExceptionHandler class to provide custom Exception Handling.
 7. It uses javax.validation.Valid annotations to validate the RequestBody coming in POST method.
-8. It uses Swagger to document Rest API (http://localhost:9000/swagger-ui.html): Change the port where your tomcat is listening.
+8. It uses Swagger to document Rest API (http://localhost:9000/swagger-ui.html) Port can be change, please check application.properties: Change the port where your tomcat is listening.
 9. It Provides response in Json/xml format and accepts the requestBody in both format, to accept/showing responses in XML we have used
 com.fasterxml.jackson.dataformat dependency.
 10. It uses filtering feature using jackson annotations(It means which fields does user wants to see).
@@ -20,6 +20,16 @@ com.fasterxml.jackson.dataformat dependency.
 13. This app is using Spring Rest WebServices.
 14. Using DevTools to reload the changes without manually restarting the application.
 15. Spring Security Basic In-Memory authentication.
+16. Included dependency for HAL Browser(JSON Hypertext Application Language, or HAL)
+URL:
+To open HAL browser with actuator:
+http://localhost:9008/browser/index.html#/actuator
+
+To open only HAL Browser
+http://localhost:9008/browser/index.html#
+
+To open any rest url with HAL Browser
+http://localhost:9008/browser/index.html#/users
 
 # Important
 1. Added: How to do external configuration for yml/yaml file (not application.yml) and injecting values using Spring Environment and @Value annotation.
